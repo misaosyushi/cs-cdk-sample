@@ -1,5 +1,5 @@
 using Amazon.CDK;
-using Amazon.CDK.AWS.S3;
+using Amazon.CDK.AWS.Lambda;
 
 namespace CsCdkSample
 {
@@ -7,8 +7,11 @@ namespace CsCdkSample
     {
         internal CsCdkSampleStack(Construct scope, string id, IStackProps props = null) : base(scope, id, props)
         {
-            var bucket = new Bucket(this, "CsCdkSampleBucket", new BucketProps {
-                Versioned = true
+            var hello = new Function(this, "HelloHandler", new FunctionProps
+            {
+                Runtime = Runtime.NODEJS_14_X,
+                Code = Code.FromAsset("lambda"),
+                Handler = "hello.handler"
             });
         }
     }
