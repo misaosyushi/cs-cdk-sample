@@ -11,7 +11,7 @@ namespace CsCdkSample
             var helloLambda = new Function(this, "HelloHandler", new FunctionProps
             {
                 Runtime = Runtime.DOTNET_CORE_3_1,
-                Code = Code.FromAsset("./lambda/HelloHandler/src/HelloHandler/bin/Release/netcoreapp3.1/publish"),
+                Code = Code.FromAsset("./lambda/HelloHandler/src/HelloHandler/bin/Debug/netcoreapp3.1/publish"),
                 Handler = "HelloHandler::HelloHandler.Function::FunctionHandler"
             });
 
