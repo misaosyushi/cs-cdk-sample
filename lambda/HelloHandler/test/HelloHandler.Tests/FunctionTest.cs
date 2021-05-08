@@ -15,7 +15,7 @@ namespace HelloHandler.Tests
             var apiGatewayProxyRequest = new APIGatewayProxyRequest();
             var response = function.FunctionHandler(apiGatewayProxyRequest, context);
 
-            Assert.Equal("Hello CDK!", response.Body);
+            Assert.Equal("test", response.Body);
             Assert.Equal((int) HttpStatusCode.OK, response.StatusCode);
         }
     }
