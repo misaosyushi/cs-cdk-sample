@@ -11,11 +11,22 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
+
     - name: Test
       run: |
         cd lambda/HelloHandler/test/HelloHandler.Tests
         dotnet test
+
+    - name: Build and deploy
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        GOOS=linux GOARCH=amd64 go build -o ./bin/main ./src
+        cd cdk
+        npx cdk deploy --require-approval "never"
