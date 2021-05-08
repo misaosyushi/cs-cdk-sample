@@ -15,7 +15,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.101
+        dotnet-version: 3.1.x
 
     - name: Setup Node.js
       uses: actions/setup-node@v1
@@ -40,5 +40,4 @@ jobs:
         AWS_DEFAULT_REGION: 'ap-northeast-1'
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      run: |
-        cdk deploy --require-approval "never"
+      run: cdk deploy --require-approval "never"
