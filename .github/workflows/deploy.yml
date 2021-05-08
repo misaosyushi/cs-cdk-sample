@@ -17,16 +17,27 @@ jobs:
       with:
         dotnet-version: 3.1.101
 
-    - name: Test
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+
+    - name: Setup AWS CDK
+        run: npm install -g aws-cdk@1.98.0
+
+    - name: Lambda test
       run: |
         cd lambda/HelloHandler/test/HelloHandler.Tests
         dotnet test
 
-    - name: Build and deploy
+    - name: Build
+      run: |
+        cd lambda/HelloHandler/src/HelloHandler
+        dotnet publish
+
+    - name: Deploy
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |
-        GOOS=linux GOARCH=amd64 go build -o ./bin/main ./src
-        cd cdk
-        npx cdk deploy --require-approval "never"
+        cdk deploy --require-approval "never"
